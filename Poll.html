@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vote on Poll</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap');
+
+        body {
+            background-color: black;
+            color: white;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1{
+            font-family: "Pixelify Sans", system-ui;
+            text-align: center;
+        }
+        h2{
+            font-family: Arial, Helvetica, sans-serif;
+            text-align: center;
+        }
+
+        .poll {
+            font-family: Arial, Helvetica, sans-serif;
+            width: 350px;
+            padding: 20px;
+            margin-top: 80px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 3px solid white;
+            border-radius: 10px;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        label {
+            display: block;
+            margin: 10px 0;
+        }
+
+        input[type="radio"] {
+            margin-right: 10px;
+        }
+
+        button {
+            background-color: rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+            font-weight: bold;
+            padding: 10px;
+            margin: 10px 0;
+            border: 2px solid white;
+            border-radius: 5px;
+            font-size: 16px;
+            color: white;
+        }
+
+        button:hover {
+            background-color: rgba(255, 255, 255, 0.5);
+        }
+
+        #results {
+            display: none;
+            margin-top: 20px;
+        }
+
+        ul {
+            padding: 0;
+            list-style-type: none;
+        }
+
+        li {
+            margin: 5px 0;
+        }
+
+        .results-container {
+            font-family: Arial, Helvetica, sans-serif;
+            width: 350px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border: 3px solid white;
+            border-radius: 10px;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+
+<body>
+    <h1>VOTE ON POLL</h1>
+    <div class="poll">
+        <h2 id="pollQuestion">Poll Question Here</h2>
+        <form id="voteForm">
+            <label>
+                <input type="radio" name="pollOption" value="0"> <span id="optionText1">Option 1</span>
+            </label>
+            <label>
+                <input type="radio" name="pollOption" value="1"> <span id="optionText2">Option 2</span>
+            </label>
+            <button type="submit">Submit Vote</button>
+        </form>
+    </div>
+    <section id="results" class="results-container">
+        <h2><u>Poll Results</u></h2>
+        <ul id="resultList">
+        </ul>
+    </section>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const pollQuestionElement = document.getElementById('pollQuestion');
+            const optionText1 = document.getElementById('optionText1');
+            const optionText2 = document.getElementById('optionText2');
+            const voteForm = document.getElementById('voteForm');
+            const resultsSection = document.getElementById('results');
+            const resultList = document.getElementById('resultList');
+            const pollQuestion = localStorage.getItem('pollQuestion');
+            const pollOption1 = localStorage.getItem('pollOption1');
+            const pollOption2 = localStorage.getItem('pollOption2');
+            let votesOption1 = parseInt(localStorage.getItem('votesOption1'));
+            let votesOption2 = parseInt(localStorage.getItem('votesOption2'));
+            pollQuestionElement.textContent = pollQuestion;
+            optionText1.textContent = pollOption1;
+            optionText2.textContent = pollOption2;
+            voteForm.addEventListener('submit', function (e) {
+                e.preventDefault();
+                const selectedOption = document.querySelector('input[name="pollOption"]:checked');
+                if (selectedOption) {
+                    if (selectedOption.value === '0') {
+                        votesOption1++;
+                        localStorage.setItem('votesOption1', votesOption1);
+                    } else {
+                        votesOption2++;
+                        localStorage.setItem('votesOption2', votesOption2);
+                    }
+                    resultsSection.style.display = 'block';
+                    resultList.innerHTML = `
+                        <li>${pollOption1}: ${votesOption1} votes</li>
+                        <li>${pollOption2}: ${votesOption2} votes</li>`;
+                } else {
+                    alert('Please select an option to vote.');
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FrontEnd Task</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap');
+
+        body {
+            background-color: black;
+            color: white;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h2{
+            font-family: "Pixelify Sans", system-ui;
+            text-align: center;
+            font-size: 30px;
+        }
+        h1{
+            font-family: "Pixelify Sans", system-ui;
+            text-align: center;
+            font-size: 40px;
+        }
+
+        .poll {
+            font-family: Arial, Helvetica, sans-serif;
+            width: 350px;
+            padding: 20px;
+            margin-top: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 3px solid white;
+            border-radius: 10px;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        input[type="text"] {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 2px solid white;
+            border-radius: 5px;
+            font-size: 16px;
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        input[type="text"]::placeholder {
+            color: white;
+        }
+
+        input[type="submit"] {
+            background-color: rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+            font-weight: bold;
+            padding: 10px;
+            margin: 10px 0;
+            border: 2px solid white;
+            border-radius: 5px;
+            font-size: 16px;
+            color: white;
+            display: block;
+        }
+
+        input[type="submit"]:hover {
+            background-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .submit-container {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>WELCOME</h1>
+    <h2>CREATE A POLL</h2>
+    <div class="poll">
+        <form id="pollForm">
+            <div class="poll2">
+                <label for="pollQuestion">Poll Question:</label>
+                <input type="text" id="question" placeholder="Enter your Question" required>
+                <br>
+                <label for="option1">Option 1:</label>
+                <input type="text" id="option1" placeholder="Enter option 1" required>
+                <br>
+                <label for="option2">Option 2:</label>
+                <input type="text" id="option2" placeholder="Enter option 2" required>
+                <br>
+                <div class="submit-container">
+                    <input type="submit" value="Submit">
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const pollForm = document.getElementById('pollForm');
+
+            pollForm.addEventListener('submit', function (e) {
+                e.preventDefault();
+                const question = document.getElementById('question').value;
+                const option1 = document.getElementById('option1').value;
+                const option2 = document.getElementById('option2').value;
+                localStorage.setItem('pollQuestion', question);
+                localStorage.setItem('pollOption1', option1);
+                localStorage.setItem('pollOption2', option2);
+                localStorage.setItem('votesOption1', 0);
+                localStorage.setItem('votesOption2', 0);
+                alert('Poll created successfully!');
+                pollForm.reset();
+                window.location.href = 'Poll.html';
+            });
+        });
+    </script>
+</body>
+
+</html>
